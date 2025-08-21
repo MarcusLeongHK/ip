@@ -14,4 +14,8 @@ public class Task {
     public void markAsDone(){
         this.isDone = true;
     }
+
+    public String toString(){
+        return String.format("[%s] %s \n", this.getStatusIcon(),this.description);
+    }
 }

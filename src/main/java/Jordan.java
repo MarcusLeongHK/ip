@@ -14,9 +14,8 @@ public class Jordan {
             String phrase = scanner.nextLine();
             if (phrase.equals("list")) {
                 for (int i = 0; i < tasks.size(); i++) {
-                    String msg = "%d.[%s] %s";
                     Task currTask = tasks.get(i);
-                    System.out.printf((msg) + "%n",i+1,currTask.getStatusIcon(),currTask.description);
+                    System.out.printf("%d." + currTask.toString() + "\n",i+1);
                 }
             }
             else if (phrase.equals("bye")){
@@ -29,11 +28,29 @@ public class Jordan {
                 System.out.println("Nice! I've marked this task as complete!");
                 Task markedTask = tasks.get(taskNumber-1);
                 markedTask.markAsDone();
-                System.out.printf("[%s] %s \n", markedTask.getStatusIcon(),markedTask.description);
+                System.out.print(markedTask);
             }
-            else {
-                tasks.add(new Task(phrase));
-                System.out.println("added: " + phrase + "\n");
+            else{
+                if (phrase.startsWith("todo ")){
+                    String desc = phrase.substring(5).trim();
+                    tasks.add(new Todo(desc));
+                }
+                else if (phrase.startsWith("deadline ")){
+                    int indexOfBy = phrase.indexOf("/by");
+                    String desc = phrase.substring(9, indexOfBy).trim();
+                    String by = phrase.substring(indexOfBy+3).trim();
+                    tasks.add(new Deadline(desc,by));
+                }
+                else if (phrase.startsWith("event ")) {
+                    int fromIndex = phrase.indexOf("/from");
+                    int toIndex = phrase.indexOf("/to");
+                    String desc = phrase.substring(6, fromIndex).trim();
+                    String from = phrase.substring(fromIndex + 5, toIndex).trim();
+                    String to = phrase.substring(toIndex + 3).trim();
+                    tasks.add(new Event(desc, from, to));
+                }
+                System.out.println("I have added task: " + tasks.get(tasks.size()-1));
+                System.out.println("Now you have " + tasks.size() + " tasks in the list");
             }
         }
         System.out.println("Bye! See you again!\n");
