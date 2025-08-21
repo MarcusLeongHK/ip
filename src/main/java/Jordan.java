@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Jordan {
     public static void main(String[] args) {
-        ArrayList<String> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
         String introText = "Hello! I'm Jordan!\n"
                 + "How can I help you?";
         System.out.println(introText);
@@ -14,15 +14,26 @@ public class Jordan {
             String phrase = scanner.nextLine();
             if (phrase.equals("list")) {
                 for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println(i + 1 + "." + tasks.get(i));
+                    String msg = "%d.[%s] %s";
+                    Task currTask = tasks.get(i);
+                    System.out.printf((msg) + "%n",i+1,currTask.getStatusIcon(),currTask.description);
                 }
             }
-            else {
-                tasks.add(phrase);
-                System.out.println("added: " + phrase + "\n");
-            }
-            if (phrase.equals("bye")){
+            else if (phrase.equals("bye")){
                 isEcho = false;
+            }
+            else if (phrase.startsWith("mark ")){
+                Scanner markScanner = new Scanner(phrase);
+                markScanner.next();
+                int taskNumber = markScanner.nextInt();
+                System.out.println("Nice! I've marked this task as complete!");
+                Task markedTask = tasks.get(taskNumber-1);
+                markedTask.markAsDone();
+                System.out.printf("[%s] %s \n", markedTask.getStatusIcon(),markedTask.description);
+            }
+            else {
+                tasks.add(new Task(phrase));
+                System.out.println("added: " + phrase + "\n");
             }
         }
         System.out.println("Bye! See you again!\n");
