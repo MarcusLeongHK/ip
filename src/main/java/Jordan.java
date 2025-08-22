@@ -31,6 +31,16 @@ public class Jordan {
                     markedTask.markAsDone();
                     System.out.print(markedTask);
                 }
+                else if (phrase.startsWith("delete ")){
+                    Scanner markScanner = new Scanner(phrase);
+                    markScanner.next();
+                    int taskNumber = markScanner.nextInt();
+                    System.out.println("I have removed this task.");
+                    Task deletedTask = tasks.get(taskNumber-1);
+                    tasks.remove(deletedTask);
+                    System.out.print(deletedTask);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list");
+                }
                 else if (phrase.startsWith("todo")){
                     String desc = phrase.substring("todo".length()).trim();
                     if (desc.isEmpty()){
