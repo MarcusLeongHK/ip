@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -66,10 +67,11 @@ public class Jordan {
                         throw new JordanException("Deadline requires a description");
                     }
                     String by = phrase.substring(indexOfBy+3).trim();
+                    LocalDate byDate = LocalDate.parse(by);
                     if (by.isEmpty()){
                         throw new JordanException("Deadline requires a due date");
                     }
-                    tasks.add(new Deadline(desc, by));
+                    tasks.add(new Deadline(desc, byDate));
                     System.out.println("I have added task: " + tasks.get(tasks.size()-1));
                     System.out.println("Now you have " + tasks.size() + " tasks in the list");
                 }
@@ -82,13 +84,15 @@ public class Jordan {
                     String desc = phrase.substring("event".length(), fromIndex).trim();
                     String from = phrase.substring(fromIndex + 5, toIndex).trim();
                     String to = phrase.substring(toIndex + 3).trim();
+                    LocalDate fromDate = LocalDate.parse(from);
+                    LocalDate toDate = LocalDate.parse(to);
                     if (desc.isEmpty()){
                         throw new JordanException("Event requires a description");
                     }
                     else if (from.isEmpty() || to.isEmpty()){
                         throw new JordanException("Event requires a from / to");
                     }
-                    tasks.add(new Event(desc, from, to));
+                    tasks.add(new Event(desc, fromDate, toDate));
                     System.out.println("I have added task: " + tasks.get(tasks.size()-1));
                     System.out.println("Now you have " + tasks.size() + " tasks in the list");
                 }
@@ -138,7 +142,7 @@ public class Jordan {
                 }
                 else if (line.startsWith("D")){
                     String by = parts[3];
-                    Task deadlineTask = new Deadline(desc,by);
+                    Task deadlineTask = new Deadline(desc,LocalDate.parse(by));
                     if(status.equals("0")){
                         deadlineTask.markAsDone();
                     }
@@ -147,7 +151,7 @@ public class Jordan {
                 else if (line.startsWith("E")){
                     String from = parts[3];
                     String to = parts[4];
-                    Task eventTask = new Event(desc, from ,to);
+                    Task eventTask = new Event(desc, LocalDate.parse(from) ,LocalDate.parse(to));
                     if(status.equals("0")){
                         eventTask.markAsDone();
                     }
