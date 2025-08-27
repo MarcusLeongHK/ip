@@ -18,4 +18,8 @@ public class Task {
     public String toString(){
         return String.format("[%s] %s \n", this.getStatusIcon(),this.description);
     }
+
+    public String saveToString(){
+        return this.toString();
+    }
 }

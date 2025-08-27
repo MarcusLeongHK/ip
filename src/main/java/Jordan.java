@@ -1,9 +1,15 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Jordan {
+    private static final String FILE_PATH = "./data/jordan.txt";
+
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
+        loadTasksFromFile(tasks);
         String introText = "Hello! I'm Jordan!\n"
                 + "How can I help you?";
         System.out.println(introText);
@@ -22,7 +28,7 @@ public class Jordan {
                 else if (phrase.equals("bye")){
                     isEcho = false;
                 }
-                else if (phrase.startsWith("mark ")){
+                else if (phrase.startsWith("mark")){
                     Scanner markScanner = new Scanner(phrase);
                     markScanner.next();
                     int taskNumber = markScanner.nextInt();
@@ -31,7 +37,7 @@ public class Jordan {
                     markedTask.markAsDone();
                     System.out.print(markedTask);
                 }
-                else if (phrase.startsWith("delete ")){
+                else if (phrase.startsWith("delete")){
                     Scanner markScanner = new Scanner(phrase);
                     markScanner.next();
                     int taskNumber = markScanner.nextInt();
@@ -86,11 +92,71 @@ public class Jordan {
                     System.out.println("I have added task: " + tasks.get(tasks.size()-1));
                     System.out.println("Now you have " + tasks.size() + " tasks in the list");
                 }
+                saveTasksToFile(tasks);
             }
             catch (JordanException e){
                 System.out.println(e.getMessage());
             }
         }
         System.out.println("Bye! See you again!\n");
+    }
+    private static void saveTasksToFile (ArrayList<Task> tasks){
+        try {
+            File directory = new File("./data");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            FileWriter fw = new FileWriter(FILE_PATH);
+            for (Task task : tasks){
+                fw.write(task.saveToString() + "\n");
+            }
+            fw.close();
+        }
+        catch (IOException e){
+            System.out.println("An error occurred from saving the tasks: " + e.getMessage());
+        }
+    }
+    private static void loadTasksFromFile(ArrayList<Task> tasks){
+        try{
+            File file = new File(FILE_PATH);
+            if (!file.exists()) {
+                System.out.println("Data file not found. Starting with an empty task list");
+                return;
+            }
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNext()){
+                String line = scanner.nextLine();
+                String[] parts = line.split(" \\| ");
+                String status = parts[1];
+                String desc = parts[2];
+                if (line.startsWith("T")){
+                    Task todoTask = new Todo(desc);
+                    if(status.equals("0")){
+                        todoTask.markAsDone();
+                    }
+                    tasks.add(todoTask);
+                }
+                else if (line.startsWith("D")){
+                    String by = parts[3];
+                    Task deadlineTask = new Deadline(desc,by);
+                    if(status.equals("0")){
+                        deadlineTask.markAsDone();
+                    }
+                    tasks.add(deadlineTask);
+                }
+                else if (line.startsWith("E")){
+                    String from = parts[3];
+                    String to = parts[4];
+                    Task eventTask = new Event(desc, from ,to);
+                    if(status.equals("0")){
+                        eventTask.markAsDone();
+                    }
+                    tasks.add(eventTask);
+                }
+            }
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 }
