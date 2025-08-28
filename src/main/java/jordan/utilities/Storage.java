@@ -17,9 +17,21 @@ import java.util.Scanner;
 public class Storage {
     private final String filePath;
 
+    /**
+     * Performs the file functions of saving tasks into a .txt file.
+     * Also, it loads tasks from the .txt file to allow for data persistence
+     */
+
     public Storage (String filepath) {
         this.filePath = filepath;
     }
+    /**
+     * Saves the tasks created in a .txt file
+     * If directory does not exist, it creates the directory
+     *
+     * @param tasks tasks which have been created.
+     * @throws JordanException If IOException occurs.
+     */
     public void save(TaskList tasks) throws JordanException {
         try {
             File directory = new File("./data");
