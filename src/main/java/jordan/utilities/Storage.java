@@ -1,5 +1,13 @@
+package jordan.utilities;
+
+import jordan.JordanException;
+import jordan.tasks.Task;
+import jordan.tasks.TaskList;
+import jordan.tasks.Todo;
+import jordan.tasks.Deadline;
+import jordan.tasks.Event;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -12,7 +20,7 @@ public class Storage {
     public Storage (String filepath) {
         this.filePath = filepath;
     }
-    public void save(TaskList tasks) throws JordanException{
+    public void save(TaskList tasks) throws JordanException {
         try {
             File directory = new File("./data");
             if (!directory.exists()) {
