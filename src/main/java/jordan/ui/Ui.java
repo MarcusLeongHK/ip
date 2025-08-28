@@ -1,4 +1,9 @@
-import java.awt.*;
+package jordan.ui;
+
+import jordan.JordanException;
+import jordan.tasks.Task;
+import jordan.tasks.TaskList;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
