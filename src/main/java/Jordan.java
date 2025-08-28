@@ -135,7 +135,7 @@ public class Jordan {
                 String desc = parts[2];
                 if (line.startsWith("T")){
                     Task todoTask = new Todo(desc);
-                    if(status.equals("0")){
+                    if(status.equals("1")){
                         todoTask.markAsDone();
                     }
                     tasks.add(todoTask);
@@ -143,7 +143,7 @@ public class Jordan {
                 else if (line.startsWith("D")){
                     String by = parts[3];
                     Task deadlineTask = new Deadline(desc,LocalDate.parse(by));
-                    if(status.equals("0")){
+                    if(status.equals("1")){
                         deadlineTask.markAsDone();
                     }
                     tasks.add(deadlineTask);
@@ -152,7 +152,7 @@ public class Jordan {
                     String from = parts[3];
                     String to = parts[4];
                     Task eventTask = new Event(desc, LocalDate.parse(from) ,LocalDate.parse(to));
-                    if(status.equals("0")){
+                    if(status.equals("1")){
                         eventTask.markAsDone();
                     }
                     tasks.add(eventTask);
