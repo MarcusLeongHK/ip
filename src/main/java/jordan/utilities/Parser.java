@@ -10,8 +10,21 @@ import jordan.ui.Ui;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+/**
+ * Represents a Parser which handles commands given by the user to retrieve information of tasks
+ * or to add mutate the task or the list.
+ */
 public class Parser {
     private static boolean isExit = false;
+    /**
+     * Returns lateral location of the specified position.
+     * If the position is unset, NaN is returned.
+     *
+     * @param ui UI of Jordan
+     * @param tasks TaskList containing tasks
+     * @param phrase the command phrase given
+     * @throws JordanException If improper formatting is given for the commands.
+     */
     public static void parse(Ui ui, TaskList tasks, String phrase) throws JordanException {
         if (phrase.equals("list")) {
             ui.listTasks(tasks);
@@ -67,6 +80,12 @@ public class Parser {
             tasks.addTask(new Event(desc, fromDate, toDate));
         }
     }
+    /**
+     * Returns the boolean value when the user commands "bye"
+     * indicating the end of the program.
+     *
+     * @return isExit boolean to exit the loop.
+     */
     public static boolean isExit(){
         return isExit;
     }
