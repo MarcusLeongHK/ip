@@ -37,27 +37,18 @@ public class Jordan {
                     Scanner markScanner = new Scanner(phrase);
                     markScanner.next();
                     int taskNumber = markScanner.nextInt();
-                    System.out.println("Nice! I've marked this task as complete!");
-                    Task markedTask = tasks.get(taskNumber - 1);
-                    markedTask.markAsDone();
-                    System.out.print(markedTask);
+                    tasks.mark(taskNumber);
                 } else if (phrase.startsWith("delete")) {
                     Scanner markScanner = new Scanner(phrase);
                     markScanner.next();
                     int taskNumber = markScanner.nextInt();
-                    System.out.println("I have removed this task.");
-                    Task deletedTask = tasks.get(taskNumber - 1);
-                    tasks.remove(deletedTask);
-                    System.out.print(deletedTask);
-                    System.out.println("Now you have " + tasks.size() + " tasks in the list");
+                    tasks.delete(taskNumber);
                 } else if (phrase.startsWith("todo")) {
                     String desc = phrase.substring("todo".length()).trim();
                     if (desc.isEmpty()) {
                         throw new JordanException("Todo task requires a description");
                     }
-                    tasks.add(new Todo(desc));
-                    System.out.println("I have added task: " + tasks.get(tasks.size() - 1));
-                    System.out.println("Now you have " + tasks.size() + " tasks in the list");
+                    tasks.addTask(new Todo(desc));
                 } else if (phrase.startsWith("deadline")) {
                     int indexOfBy = phrase.indexOf("/by");
                     if (indexOfBy == -1) {
@@ -72,9 +63,7 @@ public class Jordan {
                     if (by.isEmpty()) {
                         throw new JordanException("Deadline requires a due date");
                     }
-                    tasks.add(new Deadline(desc, byDate));
-                    System.out.println("I have added task: " + tasks.get(tasks.size() - 1));
-                    System.out.println("Now you have " + tasks.size() + " tasks in the list");
+                    tasks.addTask(new Deadline(desc, byDate));
                 } else if (phrase.startsWith("event")) {
                     int fromIndex = phrase.indexOf("/from");
                     int toIndex = phrase.indexOf("/to");
@@ -91,9 +80,7 @@ public class Jordan {
                     } else if (from.isEmpty() || to.isEmpty()) {
                         throw new JordanException("Event requires a from / to");
                     }
-                    tasks.add(new Event(desc, fromDate, toDate));
-                    System.out.println("I have added task: " + tasks.get(tasks.size() - 1));
-                    System.out.println("Now you have " + tasks.size() + " tasks in the list");
+                    tasks.addTask(new Event(desc, fromDate, toDate));
                 }
                 storage.save(tasks);
             } catch (JordanException e) {
