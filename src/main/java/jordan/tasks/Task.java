@@ -24,4 +24,8 @@ public class Task {
     public String saveToString(){
         return this.toString();
     }
+
+    public boolean isTargetTask(String desc){
+        return this.description.contains(desc);
+    }
 }

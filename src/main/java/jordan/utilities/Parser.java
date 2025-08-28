@@ -22,6 +22,10 @@ public class Parser {
             markScanner.next();
             int taskNumber = markScanner.nextInt();
             tasks.mark(taskNumber);
+        } else if (phrase.startsWith("find")) {
+            String keyword = phrase.substring("find".length()).trim();
+            System.out.println(keyword);
+            Finder.find(keyword, tasks);
         } else if (phrase.startsWith("delete")) {
             Scanner markScanner = new Scanner(phrase);
             markScanner.next();

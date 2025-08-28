@@ -26,6 +26,9 @@ public class TaskList extends ArrayList<Task> {
         System.out.println("Now you have " + this.size() + " tasks in the list");
     }
 
+    public void find(String keyword){
+
+    }
     public void addTask(Task task){
         this.add(task);
         System.out.println("I have added task: " + this.get(this.size() - 1));
