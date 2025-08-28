@@ -35,6 +35,13 @@ public class Ui {
         System.out.println(task);
     }
 
+    public void listTasks (TaskList tasks){
+        for (int i = 0; i < tasks.size(); i++) {
+            Task currTask = tasks.get(i);
+            System.out.printf("%d." + currTask.toString() + "\n", i + 1);
+        }
+    }
+
     public void addTask(){
         System.out.println("Add Task: ");
     }
