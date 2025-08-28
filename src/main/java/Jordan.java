@@ -9,21 +9,20 @@ public class Jordan {
 
     public Jordan(String filePath) {
         this.storage = new Storage(filePath);
+        this.ui = new Ui();
         try {
             this.tasks = new TaskList(this.storage.load());
         } catch (JordanException e) {
-            System.out.println(e.getMessage());
+            ui.printError(e);
             tasks = new TaskList();
         }
     }
     public void run(){
-        String introText = "Hello! I'm Jordan!\n"
-                + "How can I help you?";
-        System.out.println(introText);
+        ui.intro();
         Scanner scanner = new Scanner(System.in);
         boolean isEcho = true;
         while (isEcho) {
-            System.out.println("Add task: ");
+            ui.addTask();
             String phrase = scanner.nextLine();
             try {
                 if (phrase.equals("list")) {
@@ -84,11 +83,12 @@ public class Jordan {
                 }
                 storage.save(tasks);
             } catch (JordanException e) {
-                System.out.println(e.getMessage());
+                ui.printError(e);
             }
         }
-        System.out.println("Bye! See you again!\n");
+        ui.bye();
     }
+
         public static void main(String[] args){
             new Jordan("data/jordan.txt").run();
         }
