@@ -1,6 +1,7 @@
 package jordan.utilities;
 
 import jordan.JordanException;
+import jordan.tasks.Task;
 import jordan.tasks.TaskList;
 import jordan.tasks.Todo;
 import jordan.tasks.Deadline;
@@ -25,31 +26,37 @@ public class Parser {
      * @param phrase the command phrase given
      * @throws JordanException If improper formatting is given for the commands.
      */
-    public static void parse(Ui ui, TaskList tasks, String phrase) throws JordanException {
+    public static String parse(Ui ui, TaskList tasks, String phrase) throws JordanException {
         if (phrase.equals("list")) {
-            ui.listTasks(tasks);
+            return ui.listTasks(tasks);
         } else if (phrase.equals("bye")) {
-            isExit = true;
+            return "Bye! See you again!";
         } else if (phrase.startsWith("mark")) {
             Scanner markScanner = new Scanner(phrase);
             markScanner.next();
-            int taskNumber = markScanner.nextInt();
-            tasks.mark(taskNumber);
+            int taskNumber = markScanner.nextInt() - 1;
+            Task markedTask = tasks.get(taskNumber);
+            tasks.mark(markedTask);
+            // return response string
+            return ui.markTask(tasks.get(taskNumber));
         } else if (phrase.startsWith("find")) {
             String keyword = phrase.substring("find".length()).trim();
-            System.out.println(keyword);
-            Finder.find(keyword, tasks);
+            return Finder.find(keyword, tasks);
         } else if (phrase.startsWith("delete")) {
             Scanner markScanner = new Scanner(phrase);
             markScanner.next();
-            int taskNumber = markScanner.nextInt();
-            tasks.delete(taskNumber);
+            int taskNumber = markScanner.nextInt() - 1;
+            Task deletedTask  = tasks.get(taskNumber);
+            tasks.delete(deletedTask);
+            return ui.deleteTask(deletedTask, tasks);
         } else if (phrase.startsWith("todo")) {
             String desc = phrase.substring("todo".length()).trim();
             if (desc.isEmpty()) {
                 throw new JordanException("Todo task requires a description");
             }
-            tasks.addTask(new Todo(desc));
+            Task newTask = new Todo(desc);
+            tasks.addTask(newTask);
+            return ui.addTask(newTask, tasks);
         } else if (phrase.startsWith("deadline")) {
             int indexOfBy = phrase.indexOf("/by");
             if (indexOfBy == -1) {
@@ -64,7 +71,9 @@ public class Parser {
             if (by.isEmpty()) {
                 throw new JordanException("Deadline requires a due date");
             }
-            tasks.addTask(new Deadline(desc, byDate));
+            Task newTask = new Deadline(desc, byDate);
+            tasks.addTask(newTask);
+            return ui.addTask(newTask, tasks);
         } else if (phrase.startsWith("event")) {
             int fromIndex = phrase.indexOf("/from");
             int toIndex = phrase.indexOf("/to");
@@ -81,7 +90,12 @@ public class Parser {
             } else if (from.isEmpty() || to.isEmpty()) {
                 throw new JordanException("Event requires a from / to");
             }
-            tasks.addTask(new Event(desc, fromDate, toDate));
+            Task newTask = new Event(desc, fromDate, toDate);
+            tasks.addTask(newTask);
+            return ui.addTask(newTask, tasks);
+        }
+        else{
+            return "Please enter a prompt";
         }
     }
     /**

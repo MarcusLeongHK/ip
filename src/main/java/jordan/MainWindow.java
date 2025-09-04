@@ -24,7 +24,7 @@ public class MainWindow extends AnchorPane {
     private Jordan jordan;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/snorlax.jfif"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/pikachu.jpg"));
+    private Image jordanImage = new Image(this.getClass().getResourceAsStream("/images/pikachu.jpg"));
 
     @FXML
     public void initialize() {
@@ -43,10 +43,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = "test: " + input;
+        String response = jordan.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getJordanDialog(response, jordanImage)
         );
         userInput.clear();
     }

@@ -8,7 +8,7 @@ import jordan.utilities.Storage;
 
 import java.util.Scanner;
 
-public class Jordan{
+public class Jordan {
     private static final String FILE_PATH = "./data/jordan.txt";
     private final Storage storage;
     private TaskList tasks;
@@ -27,13 +27,22 @@ public class Jordan{
     public Jordan(){
         this(FILE_PATH);
     }
-
+    public String getResponse(String phrase) {
+        try {
+            String res = Parser.parse(ui, tasks, phrase);
+            storage.save(tasks);
+            return res;
+        }
+        catch (JordanException e){
+            return ui.printError(e);
+        }
+    }
     public void run() {
         ui.intro();
         Scanner scanner = new Scanner(System.in);
         boolean isExit = false;
         while (!isExit) {
-            ui.addTask();
+            ui.promptAddTask();
             String phrase = scanner.nextLine();
             try {
                 Parser.parse(ui, tasks, phrase);
