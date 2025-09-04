@@ -1,5 +1,6 @@
 package jordan;
 
+import javafx.application.Application;
 import jordan.tasks.TaskList;
 import jordan.ui.Ui;
 import jordan.utilities.Parser;
@@ -7,7 +8,7 @@ import jordan.utilities.Storage;
 
 import java.util.Scanner;
 
-public class Jordan {
+public class Jordan{
     private static final String FILE_PATH = "./data/jordan.txt";
     private final Storage storage;
     private TaskList tasks;
@@ -23,6 +24,10 @@ public class Jordan {
             tasks = new TaskList();
         }
     }
+    public Jordan(){
+        this(FILE_PATH);
+    }
+
     public void run() {
         ui.intro();
         Scanner scanner = new Scanner(System.in);
