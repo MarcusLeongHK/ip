@@ -32,7 +32,7 @@ public class Deadline extends Task {
      *
      * @return Deadline task string.
      */
-    public String saveToString(){
+    public String saveToString() {
         return String.format("D | %d | %s | %s",
                 this.isDone ? 1 : 0, this.description, this.by);
     }

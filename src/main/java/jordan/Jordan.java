@@ -23,7 +23,7 @@ public class Jordan {
             tasks = new TaskList();
         }
     }
-    public void run(){
+    public void run() {
         ui.intro();
         Scanner scanner = new Scanner(System.in);
         boolean isExit = false;
@@ -31,7 +31,7 @@ public class Jordan {
             ui.addTask();
             String phrase = scanner.nextLine();
             try {
-                Parser.parse(ui,tasks,phrase);
+                Parser.parse(ui, tasks, phrase);
                 storage.save(tasks);
                 isExit = Parser.isExit();
             } catch (JordanException e) {

@@ -32,6 +32,10 @@ application {
     mainClass.set("jordan.Jordan")
 }
 
+checkstyle {
+    toolVersion = '11.0.0'
+}
+
 shadowJar {
     archiveFileName = 'jordan.jar'
     archiveBaseName = "jordan"
