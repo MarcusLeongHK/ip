@@ -23,8 +23,8 @@ public class MainWindow extends AnchorPane {
 
     private Jordan jordan;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/snorlax.jfif"));
-    private Image jordanImage = new Image(this.getClass().getResourceAsStream("/images/pikachu.jpg"));
+    private Image jordanImage = new Image(this.getClass().getResourceAsStream("/images/snorlax.jfif"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/pikachu.jpg"));
 
     @FXML
     public void initialize() {
@@ -34,6 +34,9 @@ public class MainWindow extends AnchorPane {
     /** Injects the Jordan instance */
     public void setJordan(Jordan j) {
         jordan = j;
+        dialogContainer.getChildren().addAll(
+                DialogBox.getJordanDialog("Hi! I am Jordon", jordanImage)
+        );
     }
 
     /**
