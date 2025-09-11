@@ -34,6 +34,7 @@ public class Storage {
      */
     public void save(TaskList tasks) throws JordanException {
         try {
+            assert tasks != null : "TaskList cannot be null";
             File directory = new File("./data");
             if (!directory.exists()) {
                 directory.mkdirs();

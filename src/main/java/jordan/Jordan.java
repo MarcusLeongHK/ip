@@ -30,6 +30,7 @@ public class Jordan {
     public String getResponse(String phrase) {
         try {
             String res = Parser.parse(ui, tasks, phrase);
+            assert res != null : "Response cannot be null";
             storage.save(tasks);
             return res;
         }
