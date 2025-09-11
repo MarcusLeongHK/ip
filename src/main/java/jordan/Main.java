@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Jordan jordan = new Jordan();
+    private final Jordan jordan = new Jordan();
 
     @Override
     public void start(Stage stage) {

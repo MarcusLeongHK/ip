@@ -24,7 +24,7 @@ public class Ui {
         this(System.in,System.out);
     }
 
-    public String intro(){
+    public String printIntro(){
         return INTRO;
     }
 

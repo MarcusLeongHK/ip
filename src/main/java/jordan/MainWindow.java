@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import jordan.ui.Ui;
 
 /**
  * Controller for the main GUI.
@@ -23,6 +24,7 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private Jordan jordan;
+    private Ui ui;
 
     private Image jordanImage = new Image(this.getClass().getResourceAsStream("/images/snorlax.jfif"));
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/pikachu.jpg"));
@@ -36,7 +38,7 @@ public class MainWindow extends AnchorPane {
     public void setJordan(Jordan j) {
         jordan = j;
         dialogContainer.getChildren().addAll(
-                DialogBox.getJordanDialog("Hi! I am Jordon", jordanImage)
+                DialogBox.getJordanDialog(j.getUi().printIntro(), jordanImage)
         );
     }
 
