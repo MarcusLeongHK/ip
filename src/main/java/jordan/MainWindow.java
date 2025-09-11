@@ -55,6 +55,9 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getJordanDialog(response, jordanImage)
         );
         if (input.equals("bye")) {
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getJordanDialog(jordan.getUi().printBye(), jordanImage)
+            );
             Platform.exit();
         }
         userInput.clear();

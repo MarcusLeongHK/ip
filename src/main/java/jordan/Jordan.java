@@ -42,11 +42,10 @@ public class Jordan {
     }
 
     public void run() {
-        ui.printIntro();
         Scanner scanner = new Scanner(System.in);
         boolean isExitProgram = false;
         while (!isExitProgram) {
-            ui.promptAddTask();
+            ui.promptUserAddTask();
             String phrase = scanner.nextLine();
             try {
                 Parser.parse(ui, tasks, phrase);
@@ -56,7 +55,6 @@ public class Jordan {
                 ui.printError(e);
             }
         }
-        ui.bye();
     }
     public static void main(String[] args){
         new Jordan("data/jordan.txt").run();
