@@ -67,6 +67,10 @@ public class Ui {
         }
         return res.toString();
     }
+     public String listFilteredTasks (TaskList tasks) {
+         String res = "Here are the matching tasks in your list: \n";
+         return res + listTasks(tasks);
+     }
 
     public void promptAddTask(){
         System.out.println("Add Task: ");

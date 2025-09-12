@@ -35,17 +35,26 @@ public class Parser {
             Scanner markScanner = new Scanner(phrase);
             markScanner.next();
             int taskNumber = markScanner.nextInt() - 1;
+            if (taskNumber < 1) {
+                throw new JordanException("Integer value of task index must be >= 1");
+            }
             Task markedTask = tasks.get(taskNumber);
             tasks.mark(markedTask);
             // return response string
             return ui.markTask(tasks.get(taskNumber));
         } else if (phrase.startsWith("find")) {
             String keyword = phrase.substring("find".length()).trim();
-            return Finder.find(keyword, tasks);
+            if (keyword.isEmpty()) {
+                throw new JordanException("Keyword for find cannot be blank");
+            }
+            return Finder.find(keyword, tasks, ui);
         } else if (phrase.startsWith("delete")) {
             Scanner markScanner = new Scanner(phrase);
             markScanner.next();
             int taskNumber = markScanner.nextInt() - 1;
+            if (taskNumber < 1) {
+                throw new JordanException("Integer value of task index must be >= 1");
+            }
             Task deletedTask  = tasks.get(taskNumber);
             tasks.delete(deletedTask);
             return ui.deleteTask(deletedTask, tasks);
