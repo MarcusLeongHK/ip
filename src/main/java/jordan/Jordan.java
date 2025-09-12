@@ -26,9 +26,9 @@ public class Jordan {
     public Jordan(){
         this(FILE_PATH);
     }
-    public String getResponse(String phrase) {
+    public String getResponse(String userPrompt) {
         try {
-            String response = Parser.parse(ui, tasks, phrase);
+            String response = Parser.parse(ui, tasks, userPrompt);
             assert response != null : "Response cannot be null";
             storage.save(tasks);
             return response;
