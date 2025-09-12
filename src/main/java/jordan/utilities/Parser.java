@@ -27,7 +27,9 @@ public class Parser {
      * @throws JordanException If improper formatting is given for the commands.
      */
     public static String parse(Ui ui, TaskList tasks, String phrase) throws JordanException {
-        switch (phrase.split(" ")[0]) {
+        String command = phrase.split(" ")[0];
+        command = Finder.fuzzyMatch(command);
+        switch (command) {
         case "list":
             return ui.printListTasks(tasks);
         case "bye":
@@ -45,7 +47,7 @@ public class Parser {
             return ui.printMarkTask(tasks.get(markTaskNumber));
         case "find":
             String keyword = phrase.substring("find".length()).trim();
-            return Finder.find(keyword, tasks, ui);
+            return Finder.findTask(keyword, tasks, ui);
         case "delete":
             Scanner deleteScanner = new Scanner(phrase);
             deleteScanner.next();
