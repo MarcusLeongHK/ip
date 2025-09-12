@@ -45,7 +45,7 @@ public class Parser {
             return ui.printMarkTask(tasks.get(markTaskNumber));
         case "find":
             String keyword = phrase.substring("find".length()).trim();
-            return Finder.find(keyword, tasks);
+            return Finder.find(keyword, tasks, ui);
         case "delete":
             Scanner deleteScanner = new Scanner(phrase);
             deleteScanner.next();
