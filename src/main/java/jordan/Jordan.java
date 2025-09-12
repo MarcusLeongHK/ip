@@ -1,6 +1,5 @@
 package jordan;
 
-import javafx.application.Application;
 import jordan.tasks.TaskList;
 import jordan.ui.Ui;
 import jordan.utilities.Parser;
@@ -12,7 +11,7 @@ public class Jordan {
     private static final String FILE_PATH = "./data/jordan.txt";
     private final Storage storage;
     private TaskList tasks;
-    private Ui ui;
+    private final Ui ui;
 
     public Jordan(String filePath) {
         this.storage = new Storage(filePath);
@@ -29,31 +28,34 @@ public class Jordan {
     }
     public String getResponse(String phrase) {
         try {
-            String res = Parser.parse(ui, tasks, phrase);
-            assert res != null : "Response cannot be null";
+            String response = Parser.parse(ui, tasks, phrase);
+            assert response != null : "Response cannot be null";
             storage.save(tasks);
-            return res;
+            return response;
         }
         catch (JordanException e){
             return ui.printError(e);
         }
     }
+
+    public Ui getUi() {
+        return this.ui;
+    }
+
     public void run() {
-        ui.intro();
         Scanner scanner = new Scanner(System.in);
-        boolean isExit = false;
-        while (!isExit) {
-            ui.promptAddTask();
+        boolean isExitProgram = false;
+        while (!isExitProgram) {
+            ui.promptUserAddTask();
             String phrase = scanner.nextLine();
             try {
                 Parser.parse(ui, tasks, phrase);
                 storage.save(tasks);
-                isExit = Parser.isExit();
+                isExitProgram = Parser.isExit();
             } catch (JordanException e) {
                 ui.printError(e);
             }
         }
-        ui.bye();
     }
     public static void main(String[] args){
         new Jordan("data/jordan.txt").run();

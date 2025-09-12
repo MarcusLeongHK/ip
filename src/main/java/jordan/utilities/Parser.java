@@ -27,52 +27,50 @@ public class Parser {
      * @throws JordanException If improper formatting is given for the commands.
      */
     public static String parse(Ui ui, TaskList tasks, String phrase) throws JordanException {
-        if (phrase.equals("list")) {
-            return ui.listTasks(tasks);
-        } else if (phrase.equals("bye")) {
+        switch (phrase.split(" ")[0]) {
+        case "list":
+            return ui.printListTasks(tasks);
+        case "bye":
             return "Bye! See you again!";
-        } else if (phrase.startsWith("mark")) {
+        case "mark":
             Scanner markScanner = new Scanner(phrase);
             markScanner.next();
-            int taskNumber = markScanner.nextInt() - 1;
-            if (taskNumber < 1) {
-                throw new JordanException("Integer value of task index must be >= 1");
+            int markTaskNumber = markScanner.nextInt() - 1;
+            if (markTaskNumber < 0 || markTaskNumber >= tasks.size()) {
+                throw new JordanException("Task index is not in the TaskList");
             }
-            Task markedTask = tasks.get(taskNumber);
+            Task markedTask = tasks.get(markTaskNumber);
             tasks.mark(markedTask);
             // return response string
-            return ui.markTask(tasks.get(taskNumber));
-        } else if (phrase.startsWith("find")) {
+            return ui.printMarkTask(tasks.get(markTaskNumber));
+        case "find":
             String keyword = phrase.substring("find".length()).trim();
-            if (keyword.isEmpty()) {
-                throw new JordanException("Keyword for find cannot be blank");
-            }
             return Finder.find(keyword, tasks, ui);
-        } else if (phrase.startsWith("delete")) {
-            Scanner markScanner = new Scanner(phrase);
-            markScanner.next();
-            int taskNumber = markScanner.nextInt() - 1;
-            if (taskNumber < 1) {
-                throw new JordanException("Integer value of task index must be >= 1");
+        case "delete":
+            Scanner deleteScanner = new Scanner(phrase);
+            deleteScanner.next();
+            int deleteTaskNumber = deleteScanner.nextInt() - 1;
+            if (deleteTaskNumber < 0 || deleteTaskNumber >= tasks.size()) {
+                throw new JordanException("Task index is not in the TaskList");
             }
-            Task deletedTask  = tasks.get(taskNumber);
+            Task deletedTask  = tasks.get(deleteTaskNumber);
             tasks.delete(deletedTask);
-            return ui.deleteTask(deletedTask, tasks);
-        } else if (phrase.startsWith("todo")) {
+            return ui.printDeleteTask(deletedTask, tasks);
+        case "todo":
             String desc = phrase.substring("todo".length()).trim();
             if (desc.isEmpty()) {
                 throw new JordanException("Todo task requires a description");
             }
             Task newTask = new Todo(desc);
             tasks.addTask(newTask);
-            return ui.addTask(newTask, tasks);
-        } else if (phrase.startsWith("deadline")) {
+            return ui.printAddTask(newTask, tasks);
+        case "deadline":
             int indexOfBy = phrase.indexOf("/by");
             if (indexOfBy == -1) {
                 throw new JordanException("Deadline requires a due date");
             }
-            String desc = phrase.substring("deadline".length(), indexOfBy).trim();
-            if (desc.isEmpty()) {
+            String deadlineDesc = phrase.substring("deadline".length(), indexOfBy).trim();
+            if (deadlineDesc.isEmpty()) {
                 throw new JordanException("Deadline requires a description");
             }
             String by = phrase.substring(indexOfBy + 3).trim();
@@ -80,30 +78,29 @@ public class Parser {
             if (by.isEmpty()) {
                 throw new JordanException("Deadline requires a due date");
             }
-            Task newTask = new Deadline(desc, byDate);
-            tasks.addTask(newTask);
-            return ui.addTask(newTask, tasks);
-        } else if (phrase.startsWith("event")) {
+            Task newDeadlineTask = new Deadline(deadlineDesc, byDate);
+            tasks.addTask(newDeadlineTask);
+            return ui.printAddTask(newDeadlineTask, tasks);
+        case "event":
             int fromIndex = phrase.indexOf("/from");
             int toIndex = phrase.indexOf("/to");
             if (fromIndex == -1 || toIndex == -1) {
-                throw new JordanException("Event requires a from / to");
+                throw new JordanException("Event requires a from date & to date");
             }
-            String desc = phrase.substring("event".length(), fromIndex).trim();
+            String eventDesc = phrase.substring("event".length(), fromIndex).trim();
             String from = phrase.substring(fromIndex + 5, toIndex).trim();
             String to = phrase.substring(toIndex + 3).trim();
             LocalDate fromDate = LocalDate.parse(from);
             LocalDate toDate = LocalDate.parse(to);
-            if (desc.isEmpty()) {
+            if (eventDesc.isEmpty()) {
                 throw new JordanException("Event requires a description");
             } else if (from.isEmpty() || to.isEmpty()) {
-                throw new JordanException("Event requires a from / to");
+                throw new JordanException("Event requires a from date & to date");
             }
-            Task newTask = new Event(desc, fromDate, toDate);
-            tasks.addTask(newTask);
-            return ui.addTask(newTask, tasks);
-        }
-        else{
+            Task newEventTask = new Event(eventDesc, fromDate, toDate);
+            tasks.addTask(newEventTask);
+            return ui.printAddTask(newEventTask, tasks);
+        default:
             return "Please enter a prompt";
         }
     }

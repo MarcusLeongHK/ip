@@ -24,15 +24,15 @@ public class Ui {
         this(System.in,System.out);
     }
 
-    public String intro(){
+    public String printIntro(){
         return INTRO;
     }
 
-    public String bye(){
+    public String printBye(){
         return BYE;
     }
 
-    public String deleteTask (Task task, TaskList tasks){
+    public String printDeleteTask(Task task, TaskList tasks){
         String res = "I have removed this task. \n";
         res += task.toString();
         return res + "Now you have " + tasks.size() + " tasks in the list";
@@ -46,17 +46,17 @@ public class Ui {
         System.out.println(task);
     }
 
-    public String markTask (Task task) {
+    public String printMarkTask(Task task) {
         String res = "Nice! I've marked this task as complete! \n";
         return res + task.toString();
     }
 
-    public String addTask (Task task, TaskList tasks) {
+    public String printAddTask(Task task, TaskList tasks) {
         String res = "I have added task: " + task.toString() + "\n";
         return res + "Now you have " + tasks.size() + " tasks in the list";
     }
 
-    public String listTasks (TaskList tasks){
+    public String printListTasks(TaskList tasks){
         if (tasks.isEmpty()) {
             return "There are no tasks in the list";
         }
@@ -69,10 +69,10 @@ public class Ui {
     }
      public String listFilteredTasks (TaskList tasks) {
          String res = "Here are the matching tasks in your list: \n";
-         return res + listTasks(tasks);
+         return res + printListTasks(tasks);
      }
 
-    public void promptAddTask(){
+    public void promptUserAddTask(){
         System.out.println("Add Task: ");
     }
 }
