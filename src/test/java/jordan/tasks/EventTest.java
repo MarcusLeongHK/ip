@@ -1,16 +1,13 @@
 package jordan.tasks;
 
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EventTest {
+class EventTest {
     @Test
-    public void toStringTest(){
-        assertEquals("[E][ ] anniversary \n (from: Dec 1 2019 to: Dec 10 2020)",
-                new Event("anniversary", LocalDate.parse("2019-12-01"),LocalDate.parse("2020-12-10")
-        ).toString());
+    void saveToString_correctFormat() {
+        Event e = new Event("Meeting", LocalDate.of(2023, 12, 1), LocalDate.of(2023, 12, 2));
+        assertEquals("E | 0 | Meeting | 2023-12-01 | 2023-12-02", e.saveToString());
     }
 }
