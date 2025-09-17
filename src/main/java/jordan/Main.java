@@ -9,7 +9,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Duke using FXML.
+ * The main entry point for the Jordan application.
+ * <p>
+ * This class launches the JavaFX GUI using FXML and initializes the primary stage.
+ * </p>
  */
 public class Main extends Application {
 
