@@ -64,7 +64,7 @@ public class Ui {
     public String printDeleteTask(Task task, TaskList tasks) {
         String res = "I have removed this task. \n";
         res += task.toString();
-        return res + "Now you have " + tasks.size() + " tasks in the list";
+        return res + "\n" + "Now you have " + tasks.size() + " tasks in the list";
     }
 
     /**
