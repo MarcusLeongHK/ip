@@ -9,6 +9,7 @@ import jordan.tasks.Event;
 import jordan.ui.Ui;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 /**
@@ -151,7 +152,12 @@ public class Parser {
         if (by.isEmpty()) {
             throw new JordanException("Deadline requires a due date\nE.g. deadline return book /by 2019-12-01");
         }
-        LocalDate byDate = LocalDate.parse(by);
+        LocalDate byDate;
+        try {
+            byDate = LocalDate.parse(by);
+        } catch (DateTimeParseException e) {
+            throw new JordanException("Please enter the date in the format YYYY-MM-DD. Ensure the date is valid.");
+        }
         Task newDeadlineTask = new Deadline(deadlineDesc, byDate);
         tasks.addTask(newDeadlineTask);
         return ui.printAddTask(newDeadlineTask, tasks);
@@ -182,8 +188,19 @@ public class Parser {
             throw new JordanException("Event requires a from date & to date\n" +
                     "E.g. event project meeting /from 2019-10-15 /to 2019-10-16");
         }
-        LocalDate fromDate = LocalDate.parse(from);
-        LocalDate toDate = LocalDate.parse(to);
+        // Parse the dates and handle invalid format
+        LocalDate fromDate;
+        LocalDate toDate;
+        try {
+            fromDate = LocalDate.parse(from);
+            toDate = LocalDate.parse(to);
+        } catch (DateTimeParseException e) {
+            throw new JordanException("Please enter the date in the format YYYY-MM-DD. Ensure the date is valid.");
+        }
+        // Ensure fromDate is not after toDate
+        if (fromDate.isAfter(toDate)) {
+            throw new JordanException("The 'from' date cannot be after the 'to' date.");
+        }
         Task newEventTask = new Event(eventDesc, fromDate, toDate);
         tasks.addTask(newEventTask);
         return ui.printAddTask(newEventTask, tasks);

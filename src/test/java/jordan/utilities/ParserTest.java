@@ -34,7 +34,7 @@ class ParserTest {
         String response = Parser.parse(ui, tasks, "deadline return book /by 2023-12-01");
         String res = """
                 I have added task: [D][ ] return book\s
-                 (by: Dec 1 2023)\n
+                 (by: Dec 1 2023)
                 Now you have 1 tasks in the list""";
         assertEquals(res,response);
     }
@@ -44,7 +44,7 @@ class ParserTest {
         String response = Parser.parse(ui, tasks, "event project meeting /from 2023-12-01 /to 2023-12-02");
         String res = """
                 I have added task: [E][ ] project meeting\s
-                 (from: Dec 1 2023 to: Dec 2 2023)\n
+                 (from: Dec 1 2023 to: Dec 2 2023)
                 Now you have 1 tasks in the list""";
         assertEquals(res,response);
     }
