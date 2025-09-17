@@ -69,4 +69,12 @@ public class Task {
     public boolean isTargetTask(String desc) {
         return this.description.contains(desc);
     }
+/**
+         * Returns the description of the task.
+         *
+         * @return The task description.
+         */
+    public String getDescription() {
+        return this.description;
+    }
 }
