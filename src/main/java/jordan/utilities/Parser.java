@@ -200,7 +200,7 @@ public class Parser {
         Scanner scanner = new Scanner(phrase);
         scanner.next();
         if (!scanner.hasNextInt()) {
-            throw new JordanException("Task index must be a number");
+            throw new JordanException("Task index must be an Integer");
         }
         return scanner.nextInt() - 1;
     }

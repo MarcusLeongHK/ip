@@ -113,7 +113,7 @@ public class Ui {
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             Task currTask = tasks.get(i);
-            res.append(String.format("%d." + currTask.toString() + "\n", i + 1));
+            res.append(String.format("%d." + currTask.toString(), i + 1));
         }
         return res.toString();
     }
