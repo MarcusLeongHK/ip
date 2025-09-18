@@ -48,7 +48,7 @@ public class Task {
      * @return The formatted string representation of the task.
      */
     public String toString() {
-        return String.format("[%s] %s \n", this.getStatusIcon(), this.description);
+        return String.format("[%s] %s", this.getStatusIcon(), this.description);
     }
 
     /**
