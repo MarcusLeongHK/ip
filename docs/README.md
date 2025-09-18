@@ -163,4 +163,3 @@ Exits the application.
 | Delete task | `delete INDEX`                                                        |
 | Find tasks  | `find KEYWORD`                                                        |
 | Exit        | `bye`                                                                 |
-```
